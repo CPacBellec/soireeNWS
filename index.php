@@ -173,5 +173,31 @@
 
 
     <script src="js/index.js"></script>
+    <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    function sendScrollPosition(position) {
+      fetch("methodes/scroll_tracking.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ scrollPosition: position }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // Gérez la réponse du serveur si nécessaire
+          console.log(data);
+        })
+        .catch((error) => {
+          console.error("Erreur lors de l'envoi des données de défilement :", error);
+        });
+    }
+
+    window.addEventListener("scroll", function () {
+      var scrollPosition = window.scrollY || document.documentElement.scrollTop;
+      sendScrollPosition(scrollPosition);
+    });
+  });
+</script>
   </body>
 </html>
