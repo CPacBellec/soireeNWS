@@ -1,3 +1,8 @@
+<?php 
+session_start();
+include('methodes/visitorCounter.php'); 
+?>
+
 <!DOCTYPE html>
 <html>
   <head>
