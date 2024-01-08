@@ -7,11 +7,20 @@ require_once 'methodes/visitorCounter.php';
 $pdoManager = new DBManager('nwsnight');
 $pdo = $pdoManager->getPDO();
 
-// Appeler la fonction generateVisitorsCard pour mettre à jour le compteur de visiteurs
-generateVisitorsCard($pdo);
+// Récupère le nombre de visiteurs pour la date actuelle (avant l'incrémentation)
+$nombreVisiteursQuotidiens = getVisitorsCount($pdo);
+
+// Incrémente le compteur de visiteurs seulement si la page actuelle est index.php
+if (basename($_SERVER["SCRIPT_FILENAME"]) == 'index.php') {
+    incrementVisitorCount($pdo);
+}
+
+
+// Récupère le nombre de visiteurs quotidiens depuis la session
+//$nombreVisiteursQuotidiens = isset($_SESSION['nombreVisiteursQuotidiens']) ? $_SESSION['nombreVisiteursQuotidiens'] : 0;
 
 // Enregistre le nombre de visiteurs dans une variable de session
-$_SESSION['nombreVisiteursQuotidiens'] = getVisitorsCount($pdo); 
+//$_SESSION['nombreVisiteursQuotidiens'] = getVisitorsCount($pdo); 
 ?>
 
 <!DOCTYPE html>

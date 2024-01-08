@@ -52,8 +52,9 @@ function generateKPICard($title, $value)
 }
 
 // Récupère le nombre de visiteurs quotidiens depuis la session
-$nombreVisiteursQuotidiens = isset($_SESSION['nombreVisiteursQuotidiens']) ? $_SESSION['nombreVisiteursQuotidiens'] : 0;
-
+//$nombreVisiteursQuotidiens = isset($_SESSION['nombreVisiteursQuotidiens']) ? $_SESSION['nombreVisiteursQuotidiens'] : 0;
+// Récupère le nombre de visiteurs depuis la base de données
+$nombreVisiteursQuotidiens = getVisitorsCount($pdo);
 
 
 
@@ -109,7 +110,7 @@ $nombreVisiteursQuotidiens = isset($_SESSION['nombreVisiteursQuotidiens']) ? $_S
 
     <div class="bg-white p-8 rounded shadow-md max-w-md w-full">
         <?php 
-        generateVisitorsCard($pdo);
+        echo "Nombre de visiteurs quotidiens : $nombreVisiteursQuotidiens";
         ?>
     </div>
 
