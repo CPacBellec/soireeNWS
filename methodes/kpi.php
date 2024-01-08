@@ -39,7 +39,8 @@ function generateKPICard($title, $value)
 // Récupère le nombre de visiteurs depuis la base de données
 $nombreVisiteursQuotidiens = getVisitorsCount($pdo);
 
-
+$query = $pdo->query("SELECT user_ip, scroll_position, section_name FROM scroll_tracking");
+$data = $query->fetchAll(PDO::FETCH_ASSOC);
 
 // Ajoutez d'autres KPI ici
 
@@ -84,6 +85,23 @@ $nombreVisiteursQuotidiens = getVisitorsCount($pdo);
         echo "Nombre de visiteurs quotidiens : $nombreVisiteursQuotidiens";
         ?>
     </div>
+
+    <?php
+    // Ajoutez un lien pour télécharger le fichier texte
+    echo '<div class="bg-white p-8 rounded shadow-md max-w-md w-full">';
+    echo '<h2 class="text-xl font-bold mb-4">Télécharger le fichier de journal de scroll</h2>';
+
+    $logFilePath = __DIR__ . '/scroll_log.txt';
+
+    // Vérifier si le fichier existe avant de créer le lien
+    if (file_exists($logFilePath)) {
+        echo '<p><a href="download_log.php" class="text-blue-500">Télécharger le fichier</a></p>';
+    } else {
+        echo '<p>Aucune donnée de scroll n\'a été enregistrée.</p>';
+    }
+
+    echo '</div>';
+    ?>
 
 
 </body>
