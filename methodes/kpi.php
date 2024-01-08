@@ -27,23 +27,6 @@ $userIP = $_SERVER['REMOTE_ADDR'];
 
 $geoLocation = getGeoLocation($userIP, $ipstackApiKey);
 
-function getScrollPositions()
-{
-    $pdoManager = new DBManager('nwsnight');
-    $pdo = $pdoManager->getPDO();
-
-    // Sélectionnez les informations de défilement
-    $stmt = $pdo->prepare("SELECT user_ip, scroll_position FROM scroll_tracking");
-    $stmt->execute();
-
-    // Récupérez toutes les lignes résultantes
-    $scrollPositions = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    return $scrollPositions;
-}
-
-// Obtenez les positions de défilement de la base de données
-$scrollPositions = getScrollPositions();
 
 function generateKPICard($title, $value)
 {            echo '<div class="mb-6">';
@@ -93,18 +76,6 @@ $nombreVisiteursQuotidiens = getVisitorsCount($pdo);
         generateKPICard("Code postal", $geoLocation['zip']);
 
         // Ajoutez d'autres KPI ici en utilisant la fonction
-        ?>
-    </div>
-
-    <div class="bg-white p-8 rounded shadow-md max-w-md w-full">
-        <?php 
-            // Affichez les positions de défilement
-            echo '<h2 class="text-xl font-bold mb-4">Positions de défilement</h2>';
-
-            foreach ($scrollPositions as $position) {
-                // Utilisez la fonction pour afficher chaque position de défilement
-                generateKPICard("IP: " . $position['user_ip'], "Position: " . $position['scroll_position']);
-            }
         ?>
     </div>
 
